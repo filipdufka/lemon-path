@@ -1,3 +1,5 @@
-public class LemonPath{
-	// TODO
+namespace FruitBowl {
+	public class LemonPath {
+		// TODO
+	}
 }
