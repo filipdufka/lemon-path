@@ -1,3 +1,3 @@
-# Meloun Timer
+# Lemon Paths
 ## Quick Description
-Unity Package for managing coroutines and timed actions.
+Unity Package for managing 2D vector paths.
