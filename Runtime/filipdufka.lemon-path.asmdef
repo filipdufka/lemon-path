@@ -1,5 +1,6 @@
 {
-    "name": "filipdufka.lemon-paths",
+    "name": "filipdufka.lemon-path",
+    "rootNamespace": "FruitBowl",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
