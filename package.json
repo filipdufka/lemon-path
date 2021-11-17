@@ -1,0 +1,14 @@
+{
+  "name": "com.filipdufka.lemon-paths",
+  "version": "1.0.0",
+  "displayName": "Lemon Paths",
+  "description": "Classes for managing 2D paths and curves.",
+  "keywords": [
+    "vector paths",
+    "2D curves"
+  ],
+  "author": {
+    "name": "Filip Dufka",
+    "email": "filipdufka@gmail.com"
+  }
+}
