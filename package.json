@@ -10,5 +10,8 @@
   "author": {
     "name": "Filip Dufka",
     "email": "filipdufka@gmail.com"
+  },
+  "dependencies":{
+	  "com.filipdufka.orange-helpers" : "1.0.0"
   }
 }

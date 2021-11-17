@@ -1,7 +1,9 @@
 {
     "name": "filipdufka.lemon-path",
     "rootNamespace": "FruitBowl",
-    "references": [],
+    "references": [
+        "GUID:2d24347815769b542b87acc2c45c5bd1"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": true,
