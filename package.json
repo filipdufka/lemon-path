@@ -1,7 +1,7 @@
 {
-  "name": "com.filipdufka.lemon-paths",
+  "name": "com.filipdufka.lemon-path",
   "version": "1.0.0",
-  "displayName": "Lemon Paths",
+  "displayName": "Lemon Path",
   "description": "Classes for managing 2D paths and curves.",
   "keywords": [
     "vector paths",
