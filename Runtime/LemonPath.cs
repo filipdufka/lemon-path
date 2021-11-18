@@ -8,17 +8,23 @@ namespace FruitBowl {
 		public float length { get; protected set; }
 		public List<float> lengths { get; protected set; }
 
-		public bool closed { get; protected set; }
+		public bool closed { get; set; }
 		public bool valid { get { return path != null && path.Count > 1; } }
 
-		void Initialize() {
+		void Initialize(bool closed) {
 			bounds = new LemonBounds();
 			path = new List<Vector2>();
 			lengths = new List<float>();
+			this.closed = closed;
 		}
 
-		public LemonPath() {
-			Initialize();
+		public LemonPath(bool closed = false) {
+			Initialize(closed);
+		}
+
+		public LemonPath(List<Vector2> path, bool closed = false) {
+			Initialize(closed);
+			AddPointRange(path);
 		}
 
 		public void AddPoint(Vector2 p) {
@@ -30,6 +36,10 @@ namespace FruitBowl {
 			
 		}
 
+		public int GetSegmentCount() {
+			return closed ? path.Count : path.Count - 1;
+		}
+
 		public void AddPointRange(List<Vector2> points) {
 			foreach (Vector2 p in points) {
 				AddPoint(p);
@@ -37,6 +47,7 @@ namespace FruitBowl {
 		}
 
 		// TODO: use Oriented Point
+		// FIXME: take in consideration fact, that this could be closed
 		public Vector2 GetPoint(float position) {
 			float p = Mathf.Clamp01(position);
 			for (int i = 1; i < lengths.Count; i++) {
@@ -51,6 +62,26 @@ namespace FruitBowl {
 			}
 			Debug.LogError("Error with getting Point on path! Unbelievable!");
 			return new Vector2(0,0);
+		}
+
+		// FIXME: take in consideration fact, that this could be closed
+		public List<int> GetIndicesBetween(float a, float b) {
+			float mn = Mathf.Min(a, b);
+			float mx = Mathf.Max(a, b);
+
+			List<int> points = new List<int>();
+
+			for (int i = 0; i < lengths.Count; i++) {
+				float l = lengths[i] / length;
+				if (mn <= l && l <= mx) {
+					points.Add(i);
+				}
+			}
+
+			if (b < a) {
+				points.Reverse();
+			}
+			return points;
 		}
 	}
 }

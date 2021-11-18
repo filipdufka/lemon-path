@@ -47,6 +47,14 @@ namespace FruitBowl {
 			}
 		}
 
+		public static void DebugDrawPath(LemonPath path, Color c) {
+			int segmentCount = path.GetSegmentCount();
+			for (int i = 0; i < segmentCount; i++) {
+				Pair<Vector2> s = GetPathSegment(path.path, i);
+				Debug.DrawLine(s.a, s.b, c);
+			}
+		}
+
 		public static void DrawCircle(Vector2 center, float size, int resolution, Color color) {
 			float angleStep = 2 * Mathf.PI / resolution;
 			for (int a = 0; a < resolution; a++) {
