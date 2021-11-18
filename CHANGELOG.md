@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2021-11-17
 ### Added
-- Old path classes from Destination Dust.
+- Old path classes from Destination Dust and Wartrain.
 - FruitBowl namespace
 
 ### Changed

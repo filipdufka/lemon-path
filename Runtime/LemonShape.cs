@@ -1,5 +1,7 @@
 using UnityEngine;
 
-public class LemonShape : MonoBehaviour {
+namespace FruitBowl {
+	public class LemonShape : MonoBehaviour {
 
+	}
 }
