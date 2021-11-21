@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace FruitBowl {
 	public class LemonPathHelper {
-		public static List<Vector2> GetPathFromPolygonCollider2D(PolygonCollider2D collider) {
-			List<Vector2> res = new List<Vector2>();
+		public static List<Vector3> GetPathFromPolygonCollider2D(PolygonCollider2D collider) {
+			List<Vector3> res = new List<Vector3>();
 			for (int p = 0; p < collider.points.Length; p++) {
 				Vector2 p0 = collider.points[p];
 				p0 = collider.transform.localToWorldMatrix * new Vector4(p0.x, p0.y, 0, 1);
@@ -25,7 +25,7 @@ namespace FruitBowl {
 			return res;
 		}
 
-		public static int GetPathModulo(List<Vector2> path, int segment) {
+		public static int GetPathModulo(List<Vector3> path, int segment) {
 			int tempSegment = segment;
 			if (segment < 0) {
 				int loops = Mathf.FloorToInt(Mathf.Abs(segment) / (float)path.Count);
@@ -35,22 +35,27 @@ namespace FruitBowl {
 			return tempSegment % path.Count;
 		}
 
-		public static Pair<Vector2> GetPathSegment(List<Vector2> path, int segment) {
-			return new Pair<Vector2>(path[GetPathModulo(path, segment)], path[GetPathModulo(path, segment + 1)]);
+		public static Pair<int> GetPathSegmentIndices(List<Vector3> path, int segment) {
+			return new Pair<int>(GetPathModulo(path, segment), GetPathModulo(path, segment + 1));
 		}
 
-		public static void DebugDrawPath(List<Vector2> path, Color c) {
-			for (int i = 1; i < path.Count; i++) {
-				Vector2 a = path[i - 1];
-				Vector2 b = path[i];
-				Debug.DrawLine(a, b, c);
+		public static Pair<Vector3> GetPathSegment(List<Vector3> path, int segment) {
+			Pair<int> indexPair = GetPathSegmentIndices(path, segment);
+			return new Pair<Vector3>(path[indexPair.a], path[indexPair.b]);
+		}
+
+		
+
+		public static void DebugDrawPath(List<Vector3> path, Color c) {
+			for (int i = 0; i < path.Count; i++) {
+				Pair<Vector3> segment = GetPathSegment(path, i);
+				Debug.DrawLine(segment.a, segment.b, c);
 			}
 		}
 
 		public static void DebugDrawPath(LemonPath path, Color c) {
-			int segmentCount = path.GetSegmentCount();
-			for (int i = 0; i < segmentCount; i++) {
-				Pair<Vector2> s = GetPathSegment(path.path, i);
+			for (int i = 0; i < path.segmentCount; i++) {
+				Pair<Vector3> s = GetPathSegment(path.path, i);
 				Debug.DrawLine(s.a, s.b, c);
 			}
 		}
