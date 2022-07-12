@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FruitBowl {
+namespace FruitBowl.Lemon {
 	public class MeasuredPath : ClosablePath {
 		public float nonClosedLength { get; protected set; }
 		private float closingLength;
 		public float length { get { return nonClosedLength + (closed ? closingLength : 0); } }
 		public List<float> lengths { get; protected set; }
 
-		protected override void Initialize(bool closed) {
-			base.Initialize(closed);
+		protected override void Init(bool closed) {
+			base.Init(closed);
 			lengths = new List<float>();
 		}
 
@@ -23,7 +23,7 @@ namespace FruitBowl {
 		}
 
 		protected Pair<float> GetNormLengthSegmentPair(int segmentIndex) {
-			Pair<int> indices = LemonPathHelper.GetPathSegmentIndices(path, segmentIndex);
+			Pair<int> indices = GetPathSegmentIndices(segmentIndex);
 			float max = indices.b == 0 ? 1 : lengths[indices.b] / length;
 			return new Pair<float>(lengths[indices.a] / length, max);
 		}

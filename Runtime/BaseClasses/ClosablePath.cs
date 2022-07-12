@@ -1,16 +1,16 @@
 using UnityEngine;
 
-namespace FruitBowl {
+namespace FruitBowl.Lemon {
 	public class ClosablePath : BasicPath {
 		public bool closed { get; set; }
 		public int segmentCount { get { return closed ? path.Count : path.Count - 1; } }
 
-		protected virtual void Initialize(bool closed) {
-			Initialize();
+		protected virtual void Init(bool closed) {
+			Init();
 			this.closed = closed;
 		}
 
-		public int GetPathModulo(int segment) { // FIXME: maybe move somewhere more accurate?
+		public int GetPathModulo(int segment) { // FIXME: maybe move somewhere more appropriate
 			int tempSegment = segment;
 			if (segment < 0) {
 				int loops = Mathf.FloorToInt(Mathf.Abs(segment) / (float)path.Count);

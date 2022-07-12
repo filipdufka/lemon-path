@@ -2,16 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace FruitBowl {
+namespace FruitBowl.Lemon {
+	/// <summary>
+	/// Base Class for managing 2D Paths	
+	/// </summary>
 	public class LemonPath : MeasuredPath {
 
 
 		public LemonPath(bool closed = false) {
-			Initialize(closed);
+			Init(closed);
 		}
 
 		public LemonPath(List<Vector3> path, bool closed = false) {
-			Initialize(closed);
+			Init(closed);
 			AddPointRange(path);
 		}
 
@@ -22,7 +25,7 @@ namespace FruitBowl {
 				Pair<float> minMax = GetNormLengthSegmentPair(i);
 				if (p >= minMax.a && p <= minMax.b) {
 					float f = Mathf.InverseLerp(minMax.a, minMax.b, p);
-					Pair<Vector3> points = LemonPathHelper.GetPathSegment(path, i);
+					Pair<Vector3> points = GetPathSegment(i);
 					return Vector3.Lerp(points.a, points.b, f);
 				}
 			}

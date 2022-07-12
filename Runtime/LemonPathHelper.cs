@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using FruitBowl;
 using UnityEngine;
 
-namespace FruitBowl {
+namespace FruitBowl.Lemon {
 	public class LemonPathHelper {
 		public static List<Vector3> GetPathFromPolygonCollider2D(PolygonCollider2D collider) {
 			List<Vector3> res = new List<Vector3>();
@@ -25,37 +25,9 @@ namespace FruitBowl {
 			return res;
 		}
 
-		public static int GetPathModulo(List<Vector3> path, int segment) {
-			int tempSegment = segment;
-			if (segment < 0) {
-				int loops = Mathf.FloorToInt(Mathf.Abs(segment) / (float)path.Count);
-				tempSegment = segment + (loops + 1) * path.Count;
-
-			}
-			return tempSegment % path.Count;
-		}
-
-		public static Pair<int> GetPathSegmentIndices(List<Vector3> path, int segment) {
-			return new Pair<int>(GetPathModulo(path, segment), GetPathModulo(path, segment + 1));
-		}
-
-		public static Pair<Vector3> GetPathSegment(List<Vector3> path, int segment) {
-			Pair<int> indexPair = GetPathSegmentIndices(path, segment);
-			return new Pair<Vector3>(path[indexPair.a], path[indexPair.b]);
-		}
-
-		
-
-		public static void DebugDrawPath(List<Vector3> path, Color c) {
-			for (int i = 0; i < path.Count; i++) {
-				Pair<Vector3> segment = GetPathSegment(path, i);
-				Debug.DrawLine(segment.a, segment.b, c);
-			}
-		}
-
 		public static void DebugDrawPath(LemonPath path, Color c) {
 			for (int i = 0; i < path.segmentCount; i++) {
-				Pair<Vector3> s = GetPathSegment(path.path, i);
+				Pair<Vector3> s = path.GetPathSegment(i);
 				Debug.DrawLine(s.a, s.b, c);
 			}
 		}
@@ -69,5 +41,63 @@ namespace FruitBowl {
 				Debug.DrawLine(A, B, color);
 			}
 		}
+
+		public static Vector2 GetSegmentNormal(PathSegment segment)
+		{
+			return GetSegmentNormal(segment.pos.a, segment.pos.b);
+		}
+
+		public static Vector2 GetSegmentNormal(Vector2 A, Vector2 B)
+		{
+			Vector2 lineDir = B - A;
+			return (new Vector2(lineDir.y, -lineDir.x)).normalized;
+		}
+
+		// referencing http://geomalgorithms.com/a09-_intersect-3.html#Shamos-Hoey-Algorithm	
+
+		//public static List<LineEvent2> PrepareLineEventQueue(params List<Vector2>[] paths)
+		//{
+		//	//List<LineEvent2> eventsQueue = new List<LineEvent2>();
+		//	//for (int p = 0; p < paths.Length; p++)
+		//	//{
+		//	//	List<Vector2> path = paths[p];
+		//	//	for (int i = 0; i < path.Count; i++)
+		//	//	{
+		//	//		// TODO: save reference to path
+		//	//		Vector2 pos = path[i];
+		//	//		int nextIndex = GetModuloIndex(path, i + 1);
+		//	//		Vector2 nextPos = path[nextIndex];
+		//	//		int prevIndex = GetModuloIndex(path, i - 1);
+		//	//		Vector2 prevPos = path[prevIndex];
+
+		//	//		if (nextPos.x > pos.x)
+		//	//		{
+		//	//			eventsQueue.Add(new LineEvent2(i, nextIndex, pos, p));
+		//	//		}
+		//	//		if (prevPos.x > pos.x)
+		//	//		{
+		//	//			eventsQueue.Add(new LineEvent2(i, prevIndex, pos, p));
+		//	//		}
+
+		//	//		if (nextPos.x == pos.x && nextPos.y > pos.y)
+		//	//		{
+		//	//			eventsQueue.Add(new LineEvent2(i, nextIndex, pos, p));
+		//	//		}
+		//	//		if (prevPos.x == pos.x && prevPos.y > pos.y)
+		//	//		{
+		//	//			eventsQueue.Add(new LineEvent2(i, prevIndex, pos, p));
+		//	//		}
+		//	//	}
+		//	//}
+		//	//List<LineEvent2> orderedByX = eventsQueue.OrderBy(o => o.pos.x).ToList();
+		//	return orderedByX;
+		//}
+
+		//public static List<Intersection> GetIntersections(LemonPath pathA, LemonPath pathB) {
+		//	List<LineEvent2> orderedByX = PrepareLineEventQueue(path);
+		//	return result;
+  //      }
+
+
 	}
 }

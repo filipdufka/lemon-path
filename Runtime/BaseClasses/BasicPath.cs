@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FruitBowl {
+namespace FruitBowl.Lemon {
 	public class BasicPath {
 		public LemonBounds bounds { get; protected set; }
-		public List<Vector3> path { get; protected set; }
+        public List<Vector3> path { get; protected set; }
 		public bool valid { get { return path != null && path.Count > 1; } }
 
-		protected void Initialize() {
+		protected void Init() {
 			bounds = new LemonBounds();
 			path = new List<Vector3>();
 		}
