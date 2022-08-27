@@ -1,6 +1,6 @@
 {
   "name": "com.filipdufka.lemon-path",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Lemon Path",
   "description": "Classes for managing 2D paths and curves.",
   "keywords": [
@@ -11,7 +11,7 @@
     "name": "Filip Dufka",
     "email": "filipdufka@gmail.com"
   },
-  "dependencies":{
-	  "com.filipdufka.orange-helpers" : "1.0.0"
+  "dependencies": {
+    "com.filipdufka.orange-helpers": "1.0.1"
   }
 }

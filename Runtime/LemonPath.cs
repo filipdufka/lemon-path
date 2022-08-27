@@ -22,11 +22,11 @@ namespace FruitBowl.Lemon {
 		public Vector3 GetPoint(float position) {
 			float p = Mathf.Clamp01(position);
 			for (int i = 0; i < segmentCount; i++) {
-				Pair<float> minMax = GetNormLengthSegmentPair(i);
-				if (p >= minMax.a && p <= minMax.b) {
-					float f = Mathf.InverseLerp(minMax.a, minMax.b, p);
-					Pair<Vector3> points = GetPathSegment(i);
-					return Vector3.Lerp(points.a, points.b, f);
+				(float, float) minMax = GetNormLengthSegmentPair(i);
+				if (p >= minMax.Item1 && p <= minMax.Item2) {
+					float f = Mathf.InverseLerp(minMax.Item1, minMax.Item2, p);
+					(Vector3, Vector3) points = GetPathSegment(i);
+					return Vector3.Lerp(points.Item1, points.Item2, f);
 				}
 			}
 			Debug.LogError("Error with getting Point on path! Unbelievable!");

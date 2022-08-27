@@ -27,8 +27,8 @@ namespace FruitBowl.Lemon {
 
 		public static void DebugDrawPath(LemonPath path, Color c) {
 			for (int i = 0; i < path.segmentCount; i++) {
-				Pair<Vector3> s = path.GetPathSegment(i);
-				Debug.DrawLine(s.a, s.b, c);
+				(Vector3, Vector3) s = path.GetPathSegment(i);
+				Debug.DrawLine(s.Item1, s.Item2, c);
 			}
 		}
 

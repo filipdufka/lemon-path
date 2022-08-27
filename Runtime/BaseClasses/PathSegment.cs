@@ -4,13 +4,13 @@ namespace FruitBowl.Lemon
 {   
     public class PathSegment
     {
-        public Pair<int> indices;
+        public (int, int) indices;
         public LemonPath path;
-        public Pair<Vector3> pos
+        public (Vector3, Vector3) pos
         {
             get
             {
-                return new Pair<Vector3>(path.path[indices.a], path.path[indices.b]);
+                return new (path.path[indices.Item1], path.path[indices.Item2]);
             }
         }
     }

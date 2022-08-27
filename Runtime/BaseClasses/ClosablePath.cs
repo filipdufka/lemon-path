@@ -20,13 +20,13 @@ namespace FruitBowl.Lemon {
 			return tempSegment % path.Count;
 		}
 
-		public Pair<int> GetPathSegmentIndices(int segment) {
-			return new Pair<int>(GetPathModulo(segment), GetPathModulo(segment + 1));
+		public (int, int) GetPathSegmentIndices(int segment) {
+			return (GetPathModulo(segment), GetPathModulo(segment + 1));
 		}
 
-		public Pair<Vector3> GetPathSegment(int segment) {
-			Pair<int> indexPair = GetPathSegmentIndices(segment);
-			return new Pair<Vector3>(path[indexPair.a], path[indexPair.b]);
+		public (Vector3, Vector3) GetPathSegment(int segment) {
+			(int, int) indexPair = GetPathSegmentIndices(segment);
+			return (path[indexPair.Item1], path[indexPair.Item2]);
 		}
 	}
 }

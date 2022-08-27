@@ -22,10 +22,10 @@ namespace FruitBowl.Lemon {
 			base.AddPoint(p);
 		}
 
-		protected Pair<float> GetNormLengthSegmentPair(int segmentIndex) {
-			Pair<int> indices = GetPathSegmentIndices(segmentIndex);
-			float max = indices.b == 0 ? 1 : lengths[indices.b] / length;
-			return new Pair<float>(lengths[indices.a] / length, max);
+		protected (float, float) GetNormLengthSegmentPair(int segmentIndex) {
+			(int, int) indices = GetPathSegmentIndices(segmentIndex);
+			float max = indices.Item2 == 0 ? 1 : lengths[indices.Item2] / length;
+			return (lengths[indices.Item1] / length, max);
 		}
 	}
 }
