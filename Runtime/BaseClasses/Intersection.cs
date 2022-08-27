@@ -24,10 +24,10 @@ namespace FruitBowl.Lemon
 		public Intersection(Vector2 pos, PathSegment segmentA, PathSegment segmentB)
 		{
 			vertices = new int[4];
-			vertices[(int)IntersectionEnd.Aa] = segmentA.indices.a;
-			vertices[(int)IntersectionEnd.Ba] = segmentB.indices.a;
-			vertices[(int)IntersectionEnd.Ab] = segmentA.indices.b;
-			vertices[(int)IntersectionEnd.Bb] = segmentB.indices.b;
+			vertices[(int)IntersectionEnd.Aa] = segmentA.indices.Item1;
+			vertices[(int)IntersectionEnd.Ba] = segmentB.indices.Item1;
+			vertices[(int)IntersectionEnd.Ab] = segmentA.indices.Item2;
+			vertices[(int)IntersectionEnd.Bb] = segmentB.indices.Item2;
 			this.pos = pos;
 			
 			// check clockwise-ness

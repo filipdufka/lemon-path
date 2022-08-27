@@ -44,7 +44,7 @@ namespace FruitBowl.Lemon {
 
 		public static Vector2 GetSegmentNormal(PathSegment segment)
 		{
-			return GetSegmentNormal(segment.pos.a, segment.pos.b);
+			return GetSegmentNormal(segment.pos.Item1, segment.pos.Item2);
 		}
 
 		public static Vector2 GetSegmentNormal(Vector2 A, Vector2 B)

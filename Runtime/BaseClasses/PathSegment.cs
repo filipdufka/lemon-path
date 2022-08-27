@@ -10,7 +10,7 @@ namespace FruitBowl.Lemon
         {
             get
             {
-                return new (path.path[indices.Item1], path.path[indices.Item2]);
+                return (path.path[indices.Item1], path.path[indices.Item2]);
             }
         }
     }
