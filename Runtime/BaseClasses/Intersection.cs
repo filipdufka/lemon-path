@@ -1,3 +1,4 @@
+using FruitBowl.Orange;
 using UnityEngine;
 
 namespace FruitBowl.Lemon
@@ -65,6 +66,18 @@ namespace FruitBowl.Lemon
 		{
 			int arrayIndex = (int)GetIntersectionIndex(v);
 			return vertices[(arrayIndex + 2) % 4];
+		}
+
+		public static Intersection GetIntersection(PathSegment segmentA, PathSegment segmentB)
+		{
+			float t0, s0;
+			Vector3 intersection = MathUtils.LineLineIntersection((segmentA.pos), segmentB.pos, out t0, out s0);
+			if (t0 > float.NegativeInfinity)
+            {
+				return new Intersection(intersection, segmentA, segmentB);
+            }
+
+			return null;
 		}
 	}
 }

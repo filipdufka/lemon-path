@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FruitBowl;
+using FruitBowl.Orange;
 using UnityEngine;
 
 namespace FruitBowl.Lemon {
@@ -60,48 +61,45 @@ namespace FruitBowl.Lemon {
         public static List<PathSegment> PrepareLineEventQueueByX(params LemonPath[] paths)
         {
             List<PathSegment> eventsQueue = new List<PathSegment>();
-            //	//for (int p = 0; p < paths.Length; p++)
-            //	//{
-            //	//	List<Vector2> path = paths[p];
-            //	//	for (int i = 0; i < path.Count; i++)
-            //	//	{
-            //	//		// TODO: save reference to path
-            //	//		Vector2 pos = path[i];
-            //	//		int nextIndex = GetModuloIndex(path, i + 1);
-            //	//		Vector2 nextPos = path[nextIndex];
-            //	//		int prevIndex = GetModuloIndex(path, i - 1);
-            //	//		Vector2 prevPos = path[prevIndex];
-
-            //	//		if (nextPos.x > pos.x)
-            //	//		{
-            //	//			eventsQueue.Add(new LineEvent2(i, nextIndex, pos, p));
-            //	//		}
-            //	//		if (prevPos.x > pos.x)
-            //	//		{
-            //	//			eventsQueue.Add(new LineEvent2(i, prevIndex, pos, p));
-            //	//		}
-
-            //	//		if (nextPos.x == pos.x && nextPos.y > pos.y)
-            //	//		{
-            //	//			eventsQueue.Add(new LineEvent2(i, nextIndex, pos, p));
-            //	//		}
-            //	//		if (prevPos.x == pos.x && prevPos.y > pos.y)
-            //	//		{
-            //	//			eventsQueue.Add(new LineEvent2(i, prevIndex, pos, p));
-            //	//		}
-            //	//	}
-            //	//}
-            //List<PathSegment> orderedByX = eventsQueue.OrderBy(o => o.pos.x).ToList(); //FIXME: Remove Linq
-            return eventsQueue;
+            for (int p = 0; p < paths.Length; p++)
+            {
+				eventsQueue.AddRange(paths[p].segments);
+            }
+            List<PathSegment> orderedByX = eventsQueue.OrderBy(o => o.posOrderedByX.Item1.x).ToList(); //FIXME: Remove Linq
+            return orderedByX;
         }
 
         public static List<Intersection> GetIntersections(LemonPath pathA, LemonPath pathB)
         {
             List<PathSegment> orderedByX = PrepareLineEventQueueByX(pathA, pathB);
             List<Intersection> intersections = new List<Intersection>();
+
+			List<PathSegment> segmentBuffer = new List<PathSegment>();
+			List<PathSegment> toEraseFromSegmenBuffer = new List<PathSegment>();
+
+            for (int i = 0; i < orderedByX.Count; i++)
+            {
+				PathSegment currentSegment = orderedByX[i];
+				for (int j = 0; j < segmentBuffer.Count; j++)
+                {
+					PathSegment prevSegment = segmentBuffer[j];
+					if (prevSegment.posOrderedByX.Item2.x <= currentSegment.posOrderedByX.Item1.x)
+                    {
+						toEraseFromSegmenBuffer.Add(prevSegment);
+						continue;
+                    }
+
+					Intersection intersection = Intersection.GetIntersection(currentSegment, prevSegment);
+					if (intersection != null){ intersections.Add(intersection); }
+                }
+                for (int j = 0; j < toEraseFromSegmenBuffer.Count; j++)
+                {
+					segmentBuffer.Remove(toEraseFromSegmenBuffer[j]);
+                }
+				segmentBuffer.Add(currentSegment);
+            }
+
             return intersections;
         }
-
-
     }
 }
