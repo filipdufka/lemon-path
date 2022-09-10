@@ -28,9 +28,8 @@ namespace FruitBowl.Lemon {
 					(Vector3, Vector3) points = GetPathSegment(i);
 					return Vector3.Lerp(points.Item1, points.Item2, f);
 				}
-			}
-			Debug.LogError("Error with getting Point on path! Unbelievable!");
-			return new Vector3(0,0);
+			}			
+			throw new System.Exception("Error with getting Point on path! Unbelievable!");
 		}
 
 		// FIXME: take in consideration fact, that this could be closed

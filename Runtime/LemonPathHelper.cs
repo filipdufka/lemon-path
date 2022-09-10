@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using FruitBowl;
 using UnityEngine;
 
@@ -53,51 +54,54 @@ namespace FruitBowl.Lemon {
 			return (new Vector2(lineDir.y, -lineDir.x)).normalized;
 		}
 
-		// referencing http://geomalgorithms.com/a09-_intersect-3.html#Shamos-Hoey-Algorithm	
+        // referencing http://geomalgorithms.com/a09-_intersect-3.html#Shamos-Hoey-Algorithm	
 
-		//public static List<LineEvent2> PrepareLineEventQueue(params List<Vector2>[] paths)
-		//{
-		//	//List<LineEvent2> eventsQueue = new List<LineEvent2>();
-		//	//for (int p = 0; p < paths.Length; p++)
-		//	//{
-		//	//	List<Vector2> path = paths[p];
-		//	//	for (int i = 0; i < path.Count; i++)
-		//	//	{
-		//	//		// TODO: save reference to path
-		//	//		Vector2 pos = path[i];
-		//	//		int nextIndex = GetModuloIndex(path, i + 1);
-		//	//		Vector2 nextPos = path[nextIndex];
-		//	//		int prevIndex = GetModuloIndex(path, i - 1);
-		//	//		Vector2 prevPos = path[prevIndex];
+        // with one argument it looks for selfintersections
+        public static List<PathSegment> PrepareLineEventQueueByX(params LemonPath[] paths)
+        {
+            List<PathSegment> eventsQueue = new List<PathSegment>();
+            //	//for (int p = 0; p < paths.Length; p++)
+            //	//{
+            //	//	List<Vector2> path = paths[p];
+            //	//	for (int i = 0; i < path.Count; i++)
+            //	//	{
+            //	//		// TODO: save reference to path
+            //	//		Vector2 pos = path[i];
+            //	//		int nextIndex = GetModuloIndex(path, i + 1);
+            //	//		Vector2 nextPos = path[nextIndex];
+            //	//		int prevIndex = GetModuloIndex(path, i - 1);
+            //	//		Vector2 prevPos = path[prevIndex];
 
-		//	//		if (nextPos.x > pos.x)
-		//	//		{
-		//	//			eventsQueue.Add(new LineEvent2(i, nextIndex, pos, p));
-		//	//		}
-		//	//		if (prevPos.x > pos.x)
-		//	//		{
-		//	//			eventsQueue.Add(new LineEvent2(i, prevIndex, pos, p));
-		//	//		}
+            //	//		if (nextPos.x > pos.x)
+            //	//		{
+            //	//			eventsQueue.Add(new LineEvent2(i, nextIndex, pos, p));
+            //	//		}
+            //	//		if (prevPos.x > pos.x)
+            //	//		{
+            //	//			eventsQueue.Add(new LineEvent2(i, prevIndex, pos, p));
+            //	//		}
 
-		//	//		if (nextPos.x == pos.x && nextPos.y > pos.y)
-		//	//		{
-		//	//			eventsQueue.Add(new LineEvent2(i, nextIndex, pos, p));
-		//	//		}
-		//	//		if (prevPos.x == pos.x && prevPos.y > pos.y)
-		//	//		{
-		//	//			eventsQueue.Add(new LineEvent2(i, prevIndex, pos, p));
-		//	//		}
-		//	//	}
-		//	//}
-		//	//List<LineEvent2> orderedByX = eventsQueue.OrderBy(o => o.pos.x).ToList();
-		//	return orderedByX;
-		//}
+            //	//		if (nextPos.x == pos.x && nextPos.y > pos.y)
+            //	//		{
+            //	//			eventsQueue.Add(new LineEvent2(i, nextIndex, pos, p));
+            //	//		}
+            //	//		if (prevPos.x == pos.x && prevPos.y > pos.y)
+            //	//		{
+            //	//			eventsQueue.Add(new LineEvent2(i, prevIndex, pos, p));
+            //	//		}
+            //	//	}
+            //	//}
+            //List<PathSegment> orderedByX = eventsQueue.OrderBy(o => o.pos.x).ToList(); //FIXME: Remove Linq
+            return eventsQueue;
+        }
 
-		//public static List<Intersection> GetIntersections(LemonPath pathA, LemonPath pathB) {
-		//	List<LineEvent2> orderedByX = PrepareLineEventQueue(path);
-		//	return result;
-  //      }
+        public static List<Intersection> GetIntersections(LemonPath pathA, LemonPath pathB)
+        {
+            List<PathSegment> orderedByX = PrepareLineEventQueueByX(pathA, pathB);
+            List<Intersection> intersections = new List<Intersection>();
+            return intersections;
+        }
 
 
-	}
+    }
 }

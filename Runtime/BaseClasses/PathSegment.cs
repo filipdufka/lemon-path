@@ -13,6 +13,10 @@ namespace FruitBowl.Lemon
                 return (path.path[indices.Item1], path.path[indices.Item2]);
             }
         }
+        public (Vector3, Vector3) bounds
+        {
+            get { return (path.path[indices.Item1], path.path[indices.Item2]); }
+        }
     }
 
     /// <summary>
