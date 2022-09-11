@@ -19,9 +19,10 @@ namespace FruitBowl.Lemon
 		public int Ba { get { return vertices[1]; } }
 		public int Ab { get { return vertices[2]; } }
 		public int Bb { get { return vertices[3]; } }
-		public Vector2 pos;
-		public int idA;
-		public int idB;
+		public Vector2 pos { get; protected set; }
+		public bool isSelfIntersection { get; protected set; }
+
+
 		public Intersection(Vector2 pos, PathSegment segmentA, PathSegment segmentB)
 		{
 			vertices = new int[4];
@@ -35,10 +36,13 @@ namespace FruitBowl.Lemon
 			Vector3 aatoba = (segmentB.path.path[Ba] - segmentA.path.path[Aa]).normalized;
 			Vector3 n = LemonPathHelper.GetSegmentNormal(segmentA);
 			if (Vector3.Dot(aatoba, n) > 0)
-			{ // flip Ba and Bb
-				vertices[(int)IntersectionEnd.Ba] = Bb;
-				vertices[(int)IntersectionEnd.Bb] = Ba;
+			{ // flip Ba and Bb				
+				int temp = Ba;
+				vertices[(int)IntersectionEnd.Ba] = Bb;				
+				vertices[(int)IntersectionEnd.Bb] = temp;
 			}
+
+			isSelfIntersection = segmentA.path == segmentB.path;
 		}
 
 		IntersectionEnd GetIntersectionIndex(int v)
@@ -72,7 +76,7 @@ namespace FruitBowl.Lemon
 		{
 			float t0, s0;
 			Vector3 intersection = MathUtils.LineLineIntersection((segmentA.pos), segmentB.pos, out t0, out s0);
-			if (t0 > float.NegativeInfinity)
+			if (s0 > 0f && s0 < 1f && t0 > 0f && t0 < 1f)
             {
 				return new Intersection(intersection, segmentA, segmentB);
             }

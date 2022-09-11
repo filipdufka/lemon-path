@@ -71,31 +71,40 @@ namespace FruitBowl.Lemon {
 
         public static List<Intersection> GetIntersections(LemonPath pathA, LemonPath pathB)
         {
-            List<PathSegment> orderedByX = PrepareLineEventQueueByX(pathA, pathB);
-            List<Intersection> intersections = new List<Intersection>();
+			List<Intersection> intersections = new List<Intersection>();
+
+			List<PathSegment> orderedByX = PrepareLineEventQueueByX(pathA, pathB);           
 
 			List<PathSegment> segmentBuffer = new List<PathSegment>();
 			List<PathSegment> toEraseFromSegmenBuffer = new List<PathSegment>();
 
-            for (int i = 0; i < orderedByX.Count; i++)
+			PathSegment currentSegment;
+			PathSegment prevSegment;
+			Intersection intersection;
+
+			for (int i = 0; i < orderedByX.Count; i++)
             {
-				PathSegment currentSegment = orderedByX[i];
+				currentSegment = orderedByX[i];
+				// Go through all the segments in the buffer and check intersections
 				for (int j = 0; j < segmentBuffer.Count; j++)
                 {
-					PathSegment prevSegment = segmentBuffer[j];
+					prevSegment = segmentBuffer[j];
 					if (prevSegment.posOrderedByX.Item2.x <= currentSegment.posOrderedByX.Item1.x)
                     {
 						toEraseFromSegmenBuffer.Add(prevSegment);
 						continue;
                     }
 
-					Intersection intersection = Intersection.GetIntersection(currentSegment, prevSegment);
+					intersection = PathSegment.GetIntersection(currentSegment, prevSegment);
 					if (intersection != null){ intersections.Add(intersection); }
                 }
+				// Remove all segments, which are no longer at event queue
                 for (int j = 0; j < toEraseFromSegmenBuffer.Count; j++)
                 {
 					segmentBuffer.Remove(toEraseFromSegmenBuffer[j]);
                 }
+
+				// Add this segment to buffer
 				segmentBuffer.Add(currentSegment);
             }
 

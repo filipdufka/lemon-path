@@ -43,23 +43,7 @@ namespace FruitBowl.Lemon
         public (int, int) indicesOrderedByX { get; protected set; }
         public (int, int) indicesOrderedByY { get; protected set; }
 
-    }
 
-    /// <summary>
-    /// TODO: Can we transform this into Path Segment?
-    /// </summary>
-    public class LineEvent2
-    {
-        public int thisIndex;
-        public int nextIndex;
-        public Vector2 pos;
-        public int pathId;
-        public LineEvent2(int thisIndex, int nextIndex, Vector2 pos, int pathId = 0)
-        {
-            this.thisIndex = thisIndex;
-            this.nextIndex = nextIndex;
-            this.pos = pos;
-            this.pathId = pathId;
-        }
+        public static Intersection GetIntersection(PathSegment segmentA, PathSegment segmentB) => Intersection.GetIntersection(segmentA, segmentB);
     }
 }
